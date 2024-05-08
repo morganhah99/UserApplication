@@ -13,7 +13,11 @@ import com.example.userapplication.databinding.RecyclerRowBinding
 
 
 
-class UserAdapter : ListAdapter<UserModel, UserAdapter.UserViewHolder>(DiffCallBack) {
+class UserAdapter(
+    var userList: List<UserModel>
+) : ListAdapter<UserModel, UserAdapter.UserViewHolder>(DiffCallBack) {
+
+
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.bind(getItem(position))

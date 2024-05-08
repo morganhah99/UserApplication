@@ -16,6 +16,8 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
 
     val userLiveData = MutableLiveData<List<DataModel>>()
 
+
+
     fun fetchUsersResponse() {
         viewModelScope.launch {
             val response = userRepository.getResponse()
