@@ -1,5 +1,6 @@
 package com.example.userapplication.ui
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,9 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
 
-    val userLiveData = MutableLiveData<List<DataModel>>()
-
-
+    private val _userLiveData = MutableLiveData<List<DataModel>>()
+    val userLiveData: LiveData<List<DataModel>> = _userLiveData
 
     fun fetchUsersResponse() {
         viewModelScope.launch {
@@ -24,7 +24,7 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
 
             if (response.isSuccessful) {
                 val results = response.body()?.data ?: emptyList()
-                userLiveData.postValue(results.filterNotNull())
+                _userLiveData.postValue(results.filterNotNull())
             }
         }
     }

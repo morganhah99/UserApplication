@@ -25,37 +25,20 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val userAdapter = UserAdapter()
+        binding.rvMain.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = userAdapter
+        }
 
         viewModel.fetchUsersResponse()
 
         viewModel.userLiveData.observe(this) { response ->
-            val userList = response.map { dataModel ->  
+            Log.d("MainActivity", "Received user data: $response")
+            val userList = response.map { dataModel ->
                 UserModel(data = listOf(dataModel))
             }
-
-            if (binding.rvMain.adapter == null) {
-                binding.rvMain.apply {
-                    layoutManager = LinearLayoutManager(context)
-                    adapter = UserAdapter(userList)
-                }
-            }else {
-                (binding.rvMain.adapter as UserAdapter).submitList(userList)
-            }
+            userAdapter.submitList(userList)
         }
-
-
-//        viewModel.userLiveData.observe(this) { response ->
-//            Log.d("MainActivity", "Received user data: $response")
-//            val userList = response.map { dataModel ->
-//                Log.d("UserAdapter", "Mapping dataModel to UserModel: $dataModel")
-//                UserModel(data = listOf(dataModel))
-//            }
-//            binding.rvMain.apply {
-//                layoutManager = LinearLayoutManager(context)
-//                adapter = UserAdapter(userList)
-//            }
-//        }
-
-
     }
 }
