@@ -22,11 +22,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        adapter = UserAdapter()
+
+        binding.rvMain.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+
         viewModel.fetchUsersResponse()
 
-        viewModel.userLiveData.observe(this) {
-            Log.i("ITUNES RESPONSE", it.toString())        }
-
-
+        viewModel.userLiveData.observe(this) { users ->
+            adapter.submitList(users.data)
+        }
     }
 }
