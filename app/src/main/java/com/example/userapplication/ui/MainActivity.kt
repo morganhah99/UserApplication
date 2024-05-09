@@ -2,14 +2,15 @@ package com.example.userapplication.ui
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.userapplication.R
 import com.example.userapplication.data.model.UserModel
 import com.example.userapplication.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 
 @AndroidEntryPoint
@@ -31,14 +32,15 @@ class MainActivity : AppCompatActivity() {
             adapter = userAdapter
         }
 
-        viewModel.fetchUsersResponse()
 
-        viewModel.userLiveData.observe(this) { response ->
-            Log.d("MainActivity", "Received user data: $response")
-            val userList = response.map { dataModel ->
-                UserModel(data = listOf(dataModel))
+        viewModel.userStateFlow
+            .onEach { response ->
+                Log.d("MainActivity", "Received user data: $response")
+                val userList = response.map { dataModel ->
+                    UserModel(data = listOf(dataModel))
+                }
+                userAdapter.submitList(userList)
             }
-            userAdapter.submitList(userList)
-        }
+            .launchIn(lifecycleScope)
     }
 }
