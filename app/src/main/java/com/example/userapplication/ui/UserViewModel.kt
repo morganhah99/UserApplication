@@ -3,6 +3,7 @@ package com.example.userapplication.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.userapplication.data.model.DataModel
+import com.example.userapplication.network.api.ApiResponse
 import com.example.userapplication.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,8 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
 
-    private val _userStateFlow = MutableStateFlow<List<DataModel>>(emptyList())
-    val userStateFlow: StateFlow<List<DataModel>> = _userStateFlow
+    private val _userStateFlow = MutableStateFlow<ApiResponse<List<DataModel>>>(ApiResponse.LoadingState())
+    val userStateFlow: StateFlow<ApiResponse<List<DataModel>>> = _userStateFlow
 
     init {
         fetchUsersResponse()
@@ -28,7 +29,9 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
 
             if (response.isSuccessful) {
                 val results = response.body()?.data ?: emptyList()
-                _userStateFlow.emit(results.filterNotNull())
+                _userStateFlow.emit(ApiResponse.SuccessState(results.filterNotNull()))
+            } else {
+                _userStateFlow.emit(ApiResponse.ErrorState("Failed to fetch data"))
             }
         }
     }
