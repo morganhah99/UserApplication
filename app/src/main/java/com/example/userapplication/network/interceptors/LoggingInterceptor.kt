@@ -6,7 +6,6 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.internal.concurrent.TaskRunner.Companion.logger
 import java.io.IOException
-import java.lang.String
 
 internal class LoggingInterceptor : Interceptor {
     @SuppressLint("DefaultLocale")
