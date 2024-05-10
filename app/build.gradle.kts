@@ -1,8 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id("kotlin-kapt")
-    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -39,9 +37,7 @@ android {
         viewBinding = true
     }
 
-    kapt {
-        correctErrorTypes = true
-    }
+
 }
 
 dependencies {
@@ -55,9 +51,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    //Hilt
-    implementation("com.google.dagger:hilt-android:2.51.1")
-    kapt("com.google.dagger:hilt-compiler:2.51.1")
 
 // Retrofit
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
@@ -81,6 +74,13 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.4.0")
 
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.6")
+
+    implementation("io.insert-koin:koin-core:3.5.0")
+
+    implementation("io.insert-koin:koin-android:3.5.0")
+
+
+
 
 
 }

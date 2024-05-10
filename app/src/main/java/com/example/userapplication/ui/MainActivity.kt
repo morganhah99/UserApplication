@@ -3,20 +3,19 @@ package com.example.userapplication.ui
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.userapplication.data.model.UserModel
 import com.example.userapplication.databinding.ActivityMainBinding
 import com.example.userapplication.network.api.ApiResponse
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.android.ext.android.inject
 
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: UserViewModel by viewModels()
+    //DO BY INJECT HERE AND THEN TRY IT
+    private val viewModel: UserViewModel by inject()
 
     private lateinit var binding: ActivityMainBinding
 

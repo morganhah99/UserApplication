@@ -5,16 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.userapplication.data.model.DataModel
 import com.example.userapplication.network.api.ApiResponse
 import com.example.userapplication.repository.UserRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 
-@HiltViewModel
-class UserViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
+class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     private val _userStateFlow = MutableStateFlow<ApiResponse<List<DataModel>>>(ApiResponse.LoadingState())
     val userStateFlow: StateFlow<ApiResponse<List<DataModel>>> = _userStateFlow

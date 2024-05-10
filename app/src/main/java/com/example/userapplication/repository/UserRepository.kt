@@ -1,9 +1,8 @@
 package com.example.userapplication.repository
 
-import com.example.userapplication.network.api.UserAPIService
-import javax.inject.Inject
+import com.example.userapplication.data.model.UserModel
+import retrofit2.Response
 
-class UserRepository @Inject constructor(private val service: UserAPIService) {
-
-    suspend fun getResponse() = service.getResponse()
+interface UserRepository {
+    suspend fun getResponse(): Response<UserModel>
 }
