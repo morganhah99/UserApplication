@@ -1,4 +1,4 @@
-package com.example.userapplication.injection
+package com.example.userapplication.repository
 
 import com.example.userapplication.network.api.UserAPIService
 import com.example.userapplication.repository.UserRepository

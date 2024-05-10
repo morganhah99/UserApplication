@@ -1,18 +1,13 @@
-package com.example.userapplication.injection
+package com.example.userapplication.injection.dependency
 
+import android.content.Context
 import com.example.userapplication.network.api.UserAPIService
-import com.example.userapplication.repository.UserRepository
+import com.example.userapplication.network.interceptors.LoggingInterceptor
 import okhttp3.Cache
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
-import okhttp3.OkHttpClient
-import android.content.Context
-import com.example.userapplication.network.interceptors.LoggingInterceptor
-
-
-
-
 
 fun provideApiServiceObject(context: Context): UserAPIService {
     val cacheSize = 20L * 1024L * 1024L // 20 MB
@@ -31,8 +26,3 @@ fun provideApiServiceObject(context: Context): UserAPIService {
         .build()
         .create(UserAPIService::class.java)
 }
-
-fun provideUserRepository(userAPIService: UserAPIService): UserRepository {
-    return UserRepositoryImplementation(userAPIService)
-}
-
